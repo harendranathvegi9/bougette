@@ -64,7 +64,7 @@ var CatList = React.createClass({
       <div>
         <form className="pure-form">
           <fieldset>
-            <strong>Budget</strong>
+            <strong>Bougette</strong>
             <label className="toggle" htmlFor="checkbox">
               <input id="checkbox" onChange={ this.onToggle } checked={this.state.hidden} type="checkbox"/> Show hidden
             </label>
