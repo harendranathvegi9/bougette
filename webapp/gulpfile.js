@@ -36,7 +36,7 @@ gulp.task('css', function() {
 });
 
 gulp.task('js', function() {
-  var bundler = browserify('./src/js/app.jsx');
+  var bundler = browserify('./src/js/app.jsx', watchify.args);
   bundler.transform(reactify);
   return bundler.bundle()
     .on('error', gutil.log.bind(gutil, 'Browserify Error'))
