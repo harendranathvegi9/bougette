@@ -1,6 +1,6 @@
 {
   "firebase": "bougette",
-  "public": ".",
+  "public": "dist",
   "ignore": [
     "firebase.json",
     "**/.*",

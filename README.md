@@ -45,11 +45,11 @@ Deploy the webapp frontend.
 ```sh
 $ cd webapp
 # Install dependencies
-$ npm install -g http-server firebase-tools bower
-$ bower install
+$ npm install
 # Preview the webapp locally
-$ http-server .
+$ gulp server
 
 # Deploy to Firebase
+$ gulp build
 $ firebase deploy
 ```

@@ -1,4 +1,10 @@
 /** @jsx React.DOM */
+var moment = require('moment');
+var React = require('react');
+var ReactFireMixin = require('reactfire');
+var Firebase = require('firebase');
+var _ = require('underscore');
+
 var CatList = React.createClass({
   getInitialState: function() {
     return {
@@ -59,7 +65,7 @@ var CatList = React.createClass({
         <form className="pure-form">
           <fieldset>
             <strong>Budget</strong>
-            <label className="toggle" for="checkbox">
+            <label className="toggle" htmlFor="checkbox">
               <input id="checkbox" onChange={ this.onToggle } checked={this.state.hidden} type="checkbox"/> Show hidden
             </label>
           </fieldset>
@@ -173,7 +179,7 @@ var TxnList = React.createClass({
         <form className="pure-form">
           <fieldset>
             <strong>Transactions</strong>
-            <label className="toggle" for="checkbox">
+            <label className="toggle" htmlFor="checkbox">
               <input id="checkbox" onChange={ this.onToggle } type="checkbox" /> Show all
             </label>
           </fieldset>
