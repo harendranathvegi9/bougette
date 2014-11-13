@@ -1,0 +1,38 @@
+require "fileutils"
+require "mechanize"
+require "yaml"
+require "active_support/core_ext"
+require "./lib/usbank"
+require "./lib/db"
+
+task :scrape do
+  profile_path = "#{Dir.home}/.usbank/profile.yml"
+  begin
+    FileUtils.mkdir_p(File.dirname(profile_path))
+    profile = YAML.load_file(profile_path).with_indifferent_access
+  rescue
+    raise "Cannot load ~/.usbank/profile.yml"
+  end
+  puts "Please enter your US Bank password:"
+  password = $stdin.gets.chomp
+  usbank = USBank.new(
+    username: profile[:username],
+    password: password,
+    challenges: profile[:challenges]
+    )
+  checking = usbank.fetch profile[:checking]
+  credit = usbank.fetch profile[:credit]
+  File.open("checking.csv", "w") {|f| f.write(checking) }
+  File.open("credit.csv", "w") {|f| f.write(credit) }
+end
+
+task :import do
+  db = DB.new
+  db.import_csv("checking.csv", "checking")
+  db.import_csv("credit.csv", "credit")
+end
+
+task :update do
+  Rake::Task["scrape"].invoke
+  Rake::Task["import"].invoke
+end

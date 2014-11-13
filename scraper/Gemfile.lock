@@ -1,0 +1,59 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activesupport (4.1.7)
+      i18n (~> 0.6, >= 0.6.9)
+      json (~> 1.7, >= 1.7.7)
+      minitest (~> 5.1)
+      thread_safe (~> 0.1)
+      tzinfo (~> 1.1)
+    domain_name (0.5.21)
+      unf (>= 0.0.5, < 1.0.0)
+    hitimes (1.2.2)
+    http-cookie (1.0.2)
+      domain_name (~> 0.5)
+    httpclient (2.5.3.1)
+    i18n (0.6.11)
+    json (1.8.1)
+    mechanize (2.7.3)
+      domain_name (~> 0.5, >= 0.5.1)
+      http-cookie (~> 1.0)
+      mime-types (~> 2.0)
+      net-http-digest_auth (~> 1.1, >= 1.1.1)
+      net-http-persistent (~> 2.5, >= 2.5.2)
+      nokogiri (~> 1.4)
+      ntlm-http (~> 0.1, >= 0.1.1)
+      webrobots (>= 0.0.9, < 0.2)
+    mime-types (2.4.3)
+    mini_portile (0.6.0)
+    minitest (5.4.3)
+    net-http-digest_auth (1.4)
+    net-http-persistent (2.9.4)
+    nokogiri (1.6.3.1)
+      mini_portile (= 0.6.0)
+    ntlm-http (0.1.1)
+    rake (10.1.0)
+    rest-core (3.3.2)
+      httpclient
+      mime-types
+      timers (>= 4.0.1)
+    rest-firebase (0.9.4)
+      rest-core (>= 3.3.0)
+    thread_safe (0.3.4)
+    timers (4.0.1)
+      hitimes
+    tzinfo (1.2.2)
+      thread_safe (~> 0.1)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.6)
+    webrobots (0.1.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  activesupport
+  mechanize
+  rake
+  rest-firebase
