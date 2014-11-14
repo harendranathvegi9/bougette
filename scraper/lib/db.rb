@@ -4,9 +4,9 @@ require 'date'
 require 'csv'
 
 class DB
-  def initialize(base_uri, uid, secret)
+  def initialize(url, uid, secret)
     @ref = RestFirebase.new(
-      site: base_uri,
+      site: url,
       d: {uid: uid},
       secret: secret
       )
