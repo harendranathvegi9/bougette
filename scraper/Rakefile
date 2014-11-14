@@ -6,12 +6,12 @@ require "./lib/usbank"
 require "./lib/db"
 
 task :scrape do
-  profile_path = "#{Dir.home}/.usbank/profile.yml"
+  profile_path = "../profile.yml"
   begin
     FileUtils.mkdir_p(File.dirname(profile_path))
     profile = YAML.load_file(profile_path).with_indifferent_access
   rescue
-    raise "Cannot load ~/.usbank/profile.yml"
+    raise "Cannot load profile.yml"
   end
   puts "Please enter your US Bank password:"
   password = $stdin.gets.chomp
@@ -27,7 +27,14 @@ task :scrape do
 end
 
 task :import do
-  db = DB.new
+  profile_path = "../profile.yml"
+  begin
+    FileUtils.mkdir_p(File.dirname(profile_path))
+    profile = YAML.load_file(profile_path).with_indifferent_access
+  rescue
+    raise "Cannot load profile.yml"
+  end
+  db = DB.new(profile[:uri], profile[:uid], profile[:secret])
   db.import_csv("checking.csv", "checking")
   db.import_csv("credit.csv", "credit")
 end

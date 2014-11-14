@@ -4,9 +4,12 @@ require 'date'
 require 'csv'
 
 class DB
-  def initialize
-    base_uri = "https://bougette.firebaseio.com/"
-    @ref = RestFirebase.new(site: base_uri, auth: false)
+  def initialize(base_uri, uid, secret)
+    @ref = RestFirebase.new(
+      site: base_uri,
+      d: {uid: uid},
+      secret: secret
+      )
   end
 
   def add(args)

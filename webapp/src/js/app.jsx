@@ -6,6 +6,10 @@ var Firebase = require('firebase');
 var _ = require('underscore');
 var $ = require('jquery');
 
+var Config = {
+  FIREBASE_URL: "https://bougette.firebaseio.com/"
+};
+
 var Helpers = {
   formatDate: function(date) {
     return moment(date, "YYYY-MM-DD").format("MM/DD");
@@ -36,9 +40,8 @@ var Helpers = {
 
   },
   txnColorClass: function(amount, cat) {
-    var CLASSES = ["positive-amonut", "negative-amount"];
-    var NA = "N/A";
-    return (amount > 0 || cat == NA) ? CLASSES[0] : CLASSES[1];
+    var CLASSES = ["positive-amount", "negative-amount"];
+    return (amount > 0 || cat == "N/A") ? CLASSES[0] : CLASSES[1];
   }
 };
 
@@ -107,7 +110,7 @@ var Txn = React.createClass({
     e.preventDefault();
     var hash = e.target.parentNode.parentNode.parentNode.dataset.hash;
     var cat = e.target.innerHTML;
-    var ref = new Firebase("https://bougette.firebaseio.com/txns/" + hash);
+    var ref = new Firebase(Config.FIREBASE_URL + "txns/" + hash);
     ref.update({
       cat: cat
     });
@@ -116,7 +119,7 @@ var Txn = React.createClass({
   removeCat: function(e) {
     e.preventDefault();
     var hash = e.target.parentNode.parentNode.dataset.hash;
-    var ref = new Firebase("https://bougette.firebaseio.com/txns/" + hash);
+    var ref = new Firebase(Config.FIREBASE_URL + "txns/" + hash);
     ref.update({
       cat: null
     });
@@ -188,9 +191,9 @@ var TxnList = React.createClass({
         <SectionHeader title="Transactions" toggleText="Show all" onToggle={ this.onToggle }/>
         <table>
           <tbody>
-            { this.filteredTxns().map(function(txn){
-              return <Txn txn={ txn }/>;
-            }) }
+            { this.filteredTxns().map(_.bind(function(txn){
+              return <Txn txn={ txn } cats={ this.props.cats }/>;
+            }, this)) }
           </tbody>
         </table>
       </section>
@@ -312,4 +315,4 @@ var BougetteApp = React.createClass({
   }
 });
 
-React.render(<BougetteApp fireRef={ new Firebase("https://bougette.firebaseio.com/") } />, document.getElementById("app"));
+React.render(<BougetteApp fireRef={ new Firebase(Config.FIREBASE_URL) } />, document.getElementById("app"));

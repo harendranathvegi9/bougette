@@ -10,10 +10,10 @@ Bougette is a scraper and webapp frontend which lists your recent transactions a
 
 ## Configuration
 
-Save a US Bank profile to `~/.usbank/profile.yml`.
+Save a US Bank profile to `scraper/profile.yml`.
 
 ```yaml
-# Example ~/.usbank/profile.yml
+# Example scraper/profile.yml
 username: johnsmith
 challenges:
   "What was the name of your best friend in high-school?": "Jane Doe"
@@ -22,6 +22,12 @@ challenges:
 # Account indexes appear in the account URL
 credit: 5
 checking: 1
+
+# Firebase details
+uri: "http://myapp.firebaseio.com"
+secret: "<SECRET>"
+# Firebase user UID
+uid: "simplelogin:1"
 ```
 
 ## Scraper
