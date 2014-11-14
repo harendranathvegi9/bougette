@@ -10,42 +10,42 @@ Bougette is a scraper and webapp frontend which lists your recent transactions a
 
 ## Configuration
 
-1) Create a new [Firebase](http://firebase.com) project.
+1. Create a new [Firebase](http://firebase.com) project.
 
-2) Create a Firebase user through the web interface and note the UID.
+2. Create a Firebase user through the web interface and note the UID.
 
-3) Set up your Firebase security rules according to your user UID.
-```json
-{
+3. Set up your Firebase security rules according to your user UID.
+  ```json
+  {
     "rules": {
-        ".read": "auth !== null && auth.uid == '<UID>'",
-        ".write": "auth !== null && auth.uid == '<UID>'"
+      ".read": "auth !== null && auth.uid == '<UID>'",
+      ".write": "auth !== null && auth.uid == '<UID>'"
     }
-}
-```
+  }
+  ```
 
-4) Save a configuration profile to `scraper/profile.yml`.
-```yaml
-# Example scraper/profile.yml
+4. Save a configuration profile to `scraper/profile.yml`.
+  ```yaml
+  # Example scraper/profile.yml
+  
+  # US Bank details
+  username: johnsmith
+  challenges:
+    "What was the name of your best friend in high-school?": "Jane Doe"
+    "What was the first concert you attended?": "My Bank"
+    "What was your favorite teachers name?": "Mr. Jones"
+  # Account indexes appear in the account URL
+  credit: 5
+  checking: 1
+  
+  # Firebase details
+  url: "http://myapp.firebaseio.com"
+  secret: "<SECRET>"
+  # Firebase user UID
+  uid: "<UID>"
+  ```
 
-# US Bank details
-username: johnsmith
-challenges:
-  "What was the name of your best friend in high-school?": "Jane Doe"
-  "What was the first concert you attended?": "My Bank"
-  "What was your favorite teachers name?": "Mr. Jones"
-# Account indexes appear in the account URL
-credit: 5
-checking: 1
-
-# Firebase details
-url: "http://myapp.firebaseio.com"
-secret: "<SECRET>"
-# Firebase user UID
-uid: "<USER ID>"
-```
-
-5) Edit `webapp/src/js/app.jsx` and change the FIREBASE_URL to your own project's URL.
+5. Edit `webapp/src/js/app.jsx` and change the `FIREBASE_URL` constant to your own project's URL.
 
 ## Scraper
 
