@@ -102,21 +102,6 @@ var CatList = React.createClass({
   }
 });
 
-var SectionHeader = React.createClass({
-  render: function() {
-    return (
-      <form className="pure-form">
-        <fieldset>
-          <strong>{this.props.title}</strong>
-          <label className="toggle" htmlFor={"checkbox-"+this.props.title.toLowerCase()}>
-            <input id={"checkbox-"+this.props.title.toLowerCase()} onChange={ this.props.onToggle } type="checkbox" /> {this.props.toggleText}
-          </label>
-        </fieldset>
-      </form>
-      );
-  }
-});
-
 var Txn = React.createClass({
   addCat: function(e) {
     e.preventDefault();
@@ -255,6 +240,21 @@ var Login = React.createClass({
         </form>
         <Error error={ this.state.error }/>
       </section>
+      );
+  }
+});
+
+var SectionHeader = React.createClass({
+  render: function() {
+    return (
+      <form className="pure-form">
+        <fieldset>
+          <strong>{this.props.title}</strong>
+          <label className="toggle" htmlFor={"checkbox-"+this.props.title.toLowerCase()}>
+            <input id={"checkbox-"+this.props.title.toLowerCase()} onChange={ this.props.onToggle } type="checkbox" /> {this.props.toggleText}
+          </label>
+        </fieldset>
+      </form>
       );
   }
 });
