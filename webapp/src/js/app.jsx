@@ -96,7 +96,7 @@ var CatList = React.createClass({
         <table>
           <tbody>
             { this.filteredCats().map(_.bind(function(cat){
-              return <Cat cat={ cat } txns={ this.props.txns} />;
+              return <Cat cat={ cat } txns={ this.props.txns} key={ cat.title }/>;
             }, this)) }
           </tbody>
         </table>
@@ -137,7 +137,7 @@ var Txn = React.createClass({
       var catCol = (
         <td>
           {this.props.cats.map(_.bind(function(cat) {
-            return <span><a onClick={ this.addCat } href="#">{ cat.title}</a> </span>;
+            return <span key={ cat.title } ><a onClick={ this.addCat } href="#">{ cat.title}</a> </span>;
           }, this))}
         </td>
         );
@@ -192,7 +192,7 @@ var TxnList = React.createClass({
         <table>
           <tbody>
             { this.filteredTxns().map(_.bind(function(txn){
-              return <Txn txn={ txn } cats={ this.props.cats }/>;
+              return <Txn txn={ txn } cats={ this.props.cats } key={ txn.hash }/>;
             }, this)) }
           </tbody>
         </table>
@@ -247,6 +247,36 @@ var Login = React.createClass({
   }
 });
 
+var Options = React.createClass({
+
+  currentMonth: function() {
+    return moment().format("MM");
+  },
+
+  render: function() {
+    return (
+      <form className="pure-form">
+        <fieldset>
+          <select id="options" onChange={ this.props.onChange } defaultValue= { this.currentMonth() }>
+            <option value="01">January</option>
+            <option value="02">February</option>
+            <option value="03">March</option>
+            <option value="04">April</option>
+            <option value="05">May</option>
+            <option value="06">June</option>
+            <option value="07">July</option>
+            <option value="08">August</option>
+            <option value="09">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+        </fieldset>
+      </form>
+      );
+  }
+});
+
 var SectionHeader = React.createClass({
   render: function() {
     return (
@@ -269,20 +299,34 @@ var BougetteApp = React.createClass({
     return {
       txns: [],
       cats: [],
-      loggedIn: !!this.props.fireRef.getAuth()
+      loggedIn: !!this.props.fireRef.getAuth(),
+      start: moment().startOf("month").format("YYYY-MM-DD"),
+      end: moment().endOf("month").format("YYYY-MM-DD")
     };
   },
 
   bindData: function() {
     var txnRef = this.props.fireRef.child('txns');
     var catRef = this.props.fireRef.child('cats');
-    var startOfMonth = moment().startOf("month").format("YYYY-MM-DD");
-    this.bindAsArray(txnRef.orderByChild("date").startAt(startOfMonth), "txns");
+    this.bindAsArray(txnRef.orderByChild("date").startAt(this.state.start).endAt(this.state.end), "txns");
     this.bindAsArray(catRef, "cats");
   },
 
   componentWillMount: function() {
     this.bindData();
+  },
+
+  optionsChange: function(e) {
+    e.preventDefault();
+    var zeroIndexed = parseInt(e.target.value) - 1;
+    console.log(e.target.value, zeroIndexed);
+    this.setState({
+      start: moment().month(zeroIndexed).startOf("month").format("YYYY-MM-DD"),
+      end: moment().month(zeroIndexed).endOf("month").format("YYYY-MM-DD")
+    }, _.bind(function() {
+      this.bindData();
+      console.log(this.state.start, this.state.end);
+    }, this));
   },
 
   login: function(email, password, cb, err_cb) {
@@ -309,6 +353,7 @@ var BougetteApp = React.createClass({
         <div>
           <CatList txns={ this.state.txns } cats={ this.state.cats} />
           <TxnList txns={ this.state.txns } cats={ this.state.cats }/>
+          <Options onChange={ this.optionsChange } />
         </div>
       );
   }
