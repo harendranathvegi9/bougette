@@ -57,3 +57,7 @@ table tr {
 .budget-low {
   color: #2ecc71;
 }
+
+.pure-form label {
+  margin: 0;
+}
